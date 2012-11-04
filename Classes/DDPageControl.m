@@ -266,6 +266,20 @@
 #pragma mark -
 #pragma mark Touches handlers
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+	BOOL pointInside = YES;
+
+	// Check whether the touch is in the vicinity of where our controls are drawn
+	CGFloat diameter = (indicatorDiameter > 0) ? indicatorDiameter : kDotDiameter;
+	CGRect currentBounds = self.bounds;
+	CGFloat y = CGRectGetMidY(currentBounds) - diameter / 2;
+	CGFloat yTouch = point.y;
+	if (abs((y - yTouch)) >= diameter) pointInside = NO;
+
+	return pointInside;
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	// get the touch location
